@@ -1,15 +1,11 @@
-package algebra.spring_boot;
+package algebra.spring_boot.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class TestResponse {
+public class UpdateProductDto {
 
     private String name;
-
-    private Integer age;
-
-
 }
