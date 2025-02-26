@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -15,9 +16,9 @@ public class CreateProductDto {
     @Size(min = 3, max = 13)
     private String name;
 
-
-    @PositiveOrZero
-    private Integer quantity;
+    @Max(value = 2025)
+    @Min(1500)
+    private Double yearPublished;
 
     @NotNull
     @NotEmpty
