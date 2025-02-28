@@ -2,12 +2,14 @@ package algebra.spring_boot.article;
 
 import algebra.spring_boot.category.Category;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ArticleRowMapper implements RowMapper {
+@Component
+public class ArticleRowMapper implements RowMapper<Article> {
     @Override
     public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
         Integer id = rs.getInt("Id");
