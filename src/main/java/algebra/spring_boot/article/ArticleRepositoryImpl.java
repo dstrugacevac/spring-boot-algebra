@@ -42,4 +42,12 @@ public class ArticleRepositoryImpl implements ArticleRepository{
         jdbcTemplate.update(query, article.getName(), article.getDescription(), article.getPrice(), article.getCategory().getId(), article.getId());
         return article;
     }
+
+    @Override
+    public void delete (Integer id){
+        String query = "DELETE FROM Article WHERE id = ?";
+
+        var result= jdbcTemplate.update(query, id);
+        System.out.println("Obrisano je " + result  + " stupaca");
+    }
 }

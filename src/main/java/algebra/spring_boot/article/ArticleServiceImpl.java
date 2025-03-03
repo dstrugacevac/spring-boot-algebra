@@ -64,4 +64,16 @@ public class ArticleServiceImpl implements ArticleService {
 
         return articleRepository.update(articleForUpdate);
     }
+
+
+    @Override
+    public void delete (Integer id){
+        Optional<Article> article = articleRepository.findById(id);
+
+        if (article.isEmpty()) {
+            throw new InternalException("Article not found");
+        }
+
+        articleRepository.delete(id);
+    }
 }
