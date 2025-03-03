@@ -8,10 +8,10 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Component
 public class ArticleRowMapper implements RowMapper<Article> {
     @Override
     public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
+
         Integer id = rs.getInt("Id");
         String name = rs.getString("name");
         String description = rs.getString("description");

@@ -1,11 +1,11 @@
 package algebra.spring_boot.product;
 
 
+import algebra.spring_boot.product.dto.CreateProductDto;
+import algebra.spring_boot.product.dto.UpdateProductDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
