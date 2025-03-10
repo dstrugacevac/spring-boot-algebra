@@ -22,6 +22,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<Article> findAllByFirstNameAndLastName(String firstName, String lastName) {
+        return articleRepository.findByFirstNameAndLastName(firstName, lastName);
+    }
+
+    @Override
     public List<Article> fetchAll(){
         return articleRepository.findAll();
     }

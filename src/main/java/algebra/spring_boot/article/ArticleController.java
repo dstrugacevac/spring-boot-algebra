@@ -23,8 +23,11 @@ public class ArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Article>> fetchAll(){
-        List<Article> articles = articleService.fetchAll();
+    public ResponseEntity<List<Article>> fetchAll(@RequestParam(value = "firstName") String firstName,
+                                                  @RequestParam(value = "lastName") String lastName){
+        System.out.println(firstName);
+        System.out.println(lastName);
+        List<Article> articles = articleService.findAllByFirstNameAndLastName(firstName, lastName);
         return ResponseEntity.status(200).body(articles);
     }
 

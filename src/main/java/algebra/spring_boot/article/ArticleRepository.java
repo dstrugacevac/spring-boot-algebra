@@ -15,4 +15,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     Optional<Article> findByTest(String name);
 
     Optional<Article> findTop1ByNameLike(String name);
+
+    List<Article> findByFirstNameAndLastName(String firstName, String lastName);
 }
