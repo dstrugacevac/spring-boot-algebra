@@ -23,12 +23,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> fetchAll(){
-        return articleRepository.fetchAll();
+        return articleRepository.findAll();
     }
 
     @Override
     public Optional<Article> findById(Integer id){
         return articleRepository.findById(id);
+    }
+
+    public Optional<Article> findByNameStartingWith(String name){
+        return articleRepository.findTop1ByNameLike( name + "%");
     }
 
     @Override
@@ -40,7 +44,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         Article article = new Article(dto.getName(), dto.getDescription(), dto.getPrice(), category.get());
-        return articleRepository.create(article);
+        return articleRepository.save(article);
     }
 
     @Override
@@ -62,7 +66,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleForUpdate.setPrice(dto.getPrice());
         articleForUpdate.setCategory(category.get());
 
-        return articleRepository.update(articleForUpdate);
+        return articleRepository.save(articleForUpdate);
     }
 
 
@@ -74,6 +78,6 @@ public class ArticleServiceImpl implements ArticleService {
             throw new InternalException("Article not found");
         }
 
-        articleRepository.delete(id);
+        articleRepository.delete(article.get());
     }
 }

@@ -2,6 +2,7 @@ package algebra.spring_boot.article;
 
 import algebra.spring_boot.category.Category;
 import algebra.spring_boot.category.CategoryRepository;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,11 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Article {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
@@ -21,6 +25,8 @@ public class Article {
 
     private BigDecimal price;
 
+    @ManyToOne
+    @JoinColumn(name = "categoryId", referencedColumnName = "id")
     private Category category;
 
     public Article(Integer id, String name, String description, BigDecimal price) {
