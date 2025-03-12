@@ -20,12 +20,6 @@ public class ArticleServiceImpl implements ArticleService {
         this.articleRepository = articleRepository;
         this.categoryRepository = categoryRepository;
     }
-
-    @Override
-    public List<Article> findAllByFirstNameAndLastName(String firstName, String lastName) {
-        return articleRepository.findByFirstNameAndLastName(firstName, lastName);
-    }
-
     @Override
     public List<Article> fetchAll(){
         return articleRepository.findAll();

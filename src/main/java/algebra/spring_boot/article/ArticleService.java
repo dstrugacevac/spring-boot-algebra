@@ -10,8 +10,6 @@ public interface ArticleService {
 
     List<Article> fetchAll();
 
-    List<Article> findAllByFirstNameAndLastName(String firstName, String lastName);
-
     Optional<Article> findById(Integer id);
 
     Article create(CreateArticleDto dto);

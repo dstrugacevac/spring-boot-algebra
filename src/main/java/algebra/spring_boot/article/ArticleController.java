@@ -2,12 +2,14 @@ package algebra.spring_boot.article;
 
 import algebra.spring_boot.article.dto.CreateArticleDto;
 import algebra.spring_boot.article.dto.UpdateArticleDto;
+import algebra.spring_boot.category.Category;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,11 +25,22 @@ public class ArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Article>> fetchAll(@RequestParam(value = "firstName") String firstName,
-                                                  @RequestParam(value = "lastName") String lastName){
-        System.out.println(firstName);
-        System.out.println(lastName);
-        List<Article> articles = articleService.findAllByFirstNameAndLastName(firstName, lastName);
+    public ResponseEntity<List<Article>> fetchAll(
+            @RequestParam(value = "firstName") String firstName,
+            @RequestParam(value = "lastName") String lastName
+    ){
+
+        List<Article> articles = articleService.fetchAll();
+
+
+        List<String> articleNamesFromForLoop = new ArrayList<>();
+        for (Article article : articles) {
+           articleNamesFromForLoop.add(article.getName());
+        }
+
+        List<String> articleNames = articles.stream().map(Article::getName).toList();
+        // TODO: Proučiti svakako jer ce vam trebati u svakodnevnom programiranju kasnije
+
         return ResponseEntity.status(200).body(articles);
     }
 
