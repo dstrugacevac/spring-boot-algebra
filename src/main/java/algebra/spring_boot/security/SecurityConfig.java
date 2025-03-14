@@ -1,5 +1,10 @@
 package algebra.spring_boot.security;
 
+import algebra.spring_boot.article.ArticleService;
+import algebra.spring_boot.article.ArticleServiceImpl;
+import algebra.spring_boot.user.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,16 +15,20 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.concurrent.ExecutionException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final JwtAuthFilter jwtAuthFilter;
+
+    private final UserDetailsServiceImpl userDetailsService;
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -32,14 +41,21 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
         ;
 
         return httpSecurity.build();
     }
 
     @Bean
+    public UserDetailsService userDetailsService(){
+        return new UserDetailsServiceImpl(); // Override zadani/defaultni userDetailService sa nasim custom made userDetailServiceImpl
+    }
+
+    @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder()); // Postavlja kodiranje lozinke za zadani password encoder kojeg smo konfigurirali u nastavku koda
         return authenticationProvider;
     }

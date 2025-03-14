@@ -2,16 +2,18 @@ package algebra.spring_boot.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.function.Function;
 
 @Component
 public class JwtService {
 
-    private final String SECRET_KEY = "ZGBHJBD6A7T32ZGUHJ2B1HGD67G872H2";
+    private final String SECRET_KEY = "YR6NKUdqjvelpRGGQs91jFBEPnhCVo0Irsx1uHCn4eNYbaMPpuMEs4M832bYVKc7"; //64 charactera mora biti key
 
     public boolean validateToken(String token, UserDetails userDetails){
         String username = extractUsername(token);
@@ -57,5 +59,14 @@ public class JwtService {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public String generateToken(String username){
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // traje 1h
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
     }
 }
