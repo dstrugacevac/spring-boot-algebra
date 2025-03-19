@@ -25,10 +25,7 @@ public class ArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Article>> fetchAll(
-            @RequestParam(value = "firstName") String firstName,
-            @RequestParam(value = "lastName") String lastName
-    ){
+    public ResponseEntity<List<Article>> fetchAll(){
 
         List<Article> articles = articleService.fetchAll();
 
@@ -58,7 +55,7 @@ public class ArticleController {
     @PostMapping()
     public ResponseEntity<Article> create (@Valid @RequestBody CreateArticleDto dto){
         Article article = articleService.create(dto);
-        return ResponseEntity.status(200).body(article);
+        return ResponseEntity.status(201).body(article);
     }
 
     @PutMapping("/{id}")
